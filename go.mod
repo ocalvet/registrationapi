@@ -1,4 +1,4 @@
-module registration
+module github.com/ocalvet/registrationapi
 
 go 1.12
 

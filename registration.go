@@ -4,19 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 
-	scribble "github.com/nanobox-io/golang-scribble"
+	"github.com/ocalvet/registrationapi/models"
+
+	"github.com/ocalvet/registrationapi/database"
 )
 
 func main() {
-	dir := "./data"
-
-	db, err := scribble.New(dir, nil)
-	if err != nil {
-		fmt.Println("Error creating database file", err)
-	}
+	db := database.New()
 
 	// Write a fish to the database
-	idea := Idea{
+	idea := models.Idea{
 		ID:          "1",
 		Title:       "Sample Idea",
 		Description: "A simple idea to test application",
@@ -26,7 +23,7 @@ func main() {
 		fmt.Println("Error creating idea")
 	}
 
-	dbIdea := Idea{}
+	dbIdea := models.Idea{}
 	if err := db.Read("idea", idea.ID, &dbIdea); err != nil {
 		fmt.Println("Error reading idea", err)
 	}
@@ -39,9 +36,9 @@ func main() {
 		fmt.Println("Error reading ideas", err)
 	}
 
-	ideas := []Idea{}
+	ideas := []models.Idea{}
 	for _, i := range records {
-		ideaFound := Idea{}
+		ideaFound := models.Idea{}
 		if err := json.Unmarshal([]byte(i), &ideaFound); err != nil {
 			fmt.Println("Error", err)
 		}
