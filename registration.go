@@ -7,13 +7,6 @@ import (
 	scribble "github.com/nanobox-io/golang-scribble"
 )
 
-type Idea struct {
-	ID          string
-	Title       string
-	Description string
-	Path        string
-}
-
 func main() {
 	dir := "./data"
 
