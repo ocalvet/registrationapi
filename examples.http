@@ -8,7 +8,6 @@ POST http://localhost:8080/api/registrations
 Content-Type: application/json
 
 {
-	"id": "2",
 	"user": {
 		"firstName": "Ismail",
 		"lastName": "Fletcher",
