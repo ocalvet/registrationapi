@@ -8,10 +8,22 @@ POST http://localhost:8080/api/registrations
 Content-Type: application/json
 
 {
-	"id": "3",
-	"title": "Sample Idea 3",
-	"description": "A simple idea to test application 2",
-	"path": ""
+	"id": "2",
+	"user": {
+		"firstName": "Ismail",
+		"lastName": "Fletcher",
+		"email": "ifletcher@example.com",
+		"skills": ["c#", "go", "NodeJS"]
+	},
+	"team": {
+		"name": "Horizon",
+		"logo": "http://example.com/logo.jpg",
+		"members": ["John", "Yohay", "Jeff"]
+	},
+	"idea": {
+		"title": "Idea 2",
+		"description": "Another idea that will be better"
+	}
 }
 
 ###

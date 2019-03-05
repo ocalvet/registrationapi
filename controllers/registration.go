@@ -42,14 +42,16 @@ func (controller RegistrationController) HandleGetOne(w http.ResponseWriter, r *
 		i := controller.db.GetRegistration(id)
 		encodedRegistration, err := json.Marshal(i)
 		if err != nil {
-			http.Error(w, err.Error(), 404)
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(err.Error()))
 			return
 		}
 		w.WriteHeader(http.StatusOK)
 		w.Write(encodedRegistration)
-	} else {
-		http.Error(w, "add id to request", 500)
+		return
 	}
+	w.WriteHeader(http.StatusNotFound)
+	w.Write([]byte("add id to request"))
 }
 
 // HandleDeleteRegistration handles deleting a registrations request
