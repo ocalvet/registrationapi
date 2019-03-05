@@ -8,9 +8,12 @@ import (
 	"github.com/ocalvet/registrationapi/models"
 )
 
-// StoreReader reads data from a store
-type StoreReader interface {
-	Get(id string) interface{}
+// Storage reads data from a store
+type Storage interface {
+	AddRegistration(registration models.Registration)
+	GetRegistration(string) models.Registration
+	GetRegistrations() []models.Registration
+	DeleteRegistration(string)
 }
 
 // DB is the database
@@ -30,34 +33,44 @@ func New() DB {
 	return db
 }
 
-func (db DB) AddIdea(idea models.Idea) {
-	if err := db.db.Write("idea", idea.ID, idea); err != nil {
-		fmt.Println("Error creating idea")
+// AddRegistration adds a registration to the database
+func (db DB) AddRegistration(registration models.Registration) {
+	if err := db.db.Write("registration", registration.ID, registration); err != nil {
+		fmt.Println("Error creating registration")
 	}
 }
 
-func (db DB) GetIdea(id string) models.Idea {
-	dbIdea := models.Idea{}
-	if err := db.db.Read("idea", id, &dbIdea); err != nil {
-		fmt.Println("Error reading idea", err)
+// GetRegistration Gets a registration by id
+func (db DB) GetRegistration(id string) models.Registration {
+	dbRegistration := models.Registration{}
+	if err := db.db.Read("registration", id, &dbRegistration); err != nil {
+		fmt.Println("Error reading registration", err)
 	}
-	return dbIdea
+	return dbRegistration
 }
 
-func (db DB) GetIdeas() []models.Idea {
-	// Read all ideas from the database, unmarshaling the response.
-	records, err := db.db.ReadAll("idea")
+// DeleteRegistration deletes a resource by id
+func (db DB) DeleteRegistration(id string) {
+	if err := db.db.Delete("registration", id); err != nil {
+		fmt.Println("Error deleting registration", err)
+	}
+}
+
+// GetRegistrations Gets all the registrations
+func (db DB) GetRegistrations() []models.Registration {
+	// Read all registrations from the database, unmarshaling the response.
+	records, err := db.db.ReadAll("registration")
 	if err != nil {
-		fmt.Println("Error reading ideas", err)
+		fmt.Println("Error reading registrations", err)
 	}
 
-	ideas := []models.Idea{}
+	registrations := []models.Registration{}
 	for _, i := range records {
-		ideaFound := models.Idea{}
-		if err := json.Unmarshal([]byte(i), &ideaFound); err != nil {
+		registrationFound := models.Registration{}
+		if err := json.Unmarshal([]byte(i), &registrationFound); err != nil {
 			fmt.Println("Error", err)
 		}
-		ideas = append(ideas, ideaFound)
+		registrations = append(registrations, registrationFound)
 	}
-	return ideas
+	return registrations
 }

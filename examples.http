@@ -1,12 +1,18 @@
-GET http://localhost:8080/api/ideas
+GET http://localhost:8080/api/registrations
 
 ###
-POST http://localhost:8080/api/ideas HTTP/1.1
+GET http://localhost:8080/api/registrations/1
+
+###
+POST http://localhost:8080/api/registrations
 Content-Type: application/json
 
 {
-	"id": "1",
-	"title": "Sample Idea",
-	"description": "A simple idea to test application",
+	"id": "3",
+	"title": "Sample Idea 3",
+	"description": "A simple idea to test application 2",
 	"path": ""
 }
+
+###
+DELETE http://localhost:8080/api/registrations/1
