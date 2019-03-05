@@ -80,6 +80,13 @@ func (controller RegistrationController) HandleNewRegistration(w http.ResponseWr
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	controller.db.AddRegistration(registration)
+	newRegistration := controller.db.AddRegistration(registration)
+	encodedRegistration, err := json.Marshal(newRegistration)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	w.WriteHeader(http.StatusOK)
+	w.Write(encodedRegistration)
 }

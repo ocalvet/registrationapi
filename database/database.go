@@ -5,12 +5,13 @@ import (
 	"fmt"
 
 	scribble "github.com/nanobox-io/golang-scribble"
+	uuid "github.com/nu7hatch/gouuid"
 	"github.com/ocalvet/registrationapi/models"
 )
 
 // Storage reads data from a store
 type Storage interface {
-	AddRegistration(registration models.Registration)
+	AddRegistration(registration models.Registration) models.Registration
 	GetRegistration(string) models.Registration
 	GetRegistrations() []models.Registration
 	DeleteRegistration(string)
@@ -34,10 +35,14 @@ func New() DB {
 }
 
 // AddRegistration adds a registration to the database
-func (db DB) AddRegistration(registration models.Registration) {
+func (db DB) AddRegistration(registration models.Registration) models.Registration {
+	id, _ := uuid.NewV4()
+	registration.ID = id.String()
 	if err := db.db.Write("registration", registration.ID, registration); err != nil {
 		fmt.Println("Error creating registration")
+		return models.Registration{}
 	}
+	return registration
 }
 
 // GetRegistration Gets a registration by id

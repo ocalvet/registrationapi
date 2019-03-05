@@ -27,4 +27,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/api/registrations/1
+DELETE http://localhost:8080/api/registrations/48e24ddb-8dfa-4b03-7bb1-a7dd10d75ec2
