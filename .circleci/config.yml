@@ -25,17 +25,17 @@ jobs:
       - run: go get 
       #-v -t -d ./...
       #- run: go test -v ./...
-      # - run:
-      #     name: Setup Environment Variables
-      #     command: |
-      #       echo 'export SSH_USER="rootuser"' >> $BASH_ENV
-      #       echo 'export SSH_HOST="40.121.12.189"' >> $BASH_ENV
-      # - run:
-      #     name: "SSH_USER content"
-      #     command: echo ${SSH_USER}
-      # - run:
-      #     name: "SSH_HOST content"
-      #     command: echo ${SSH_HOST}
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export SSH_USER="rootuser"' >> $BASH_ENV
+            echo 'export SSH_HOST="40.121.12.189"' >> $BASH_ENV
+      - run:
+          name: "SSH_USER content"
+          command: echo ${SSH_USER}
+      - run:
+          name: "SSH_HOST content"
+          command: echo ${SSH_HOST}
   deploy:
     machine:
       enabled: true
@@ -53,14 +53,14 @@ jobs:
           name: "SSH_HOST content"
           command: echo ${SSH_HOST}
           
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+# workflows:
+#   version: 2
+#   build-and-deploy:
+#     jobs:
+#       - build
+#       - deploy:
+#           requires:
+#             - build
+#           filters:
+#             branches:
+#               only: master
