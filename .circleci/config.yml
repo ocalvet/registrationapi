@@ -46,3 +46,15 @@ jobs:
             echo ${SSH_USER}
             echo ${SSH_HOST}
           #  ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
+          
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
