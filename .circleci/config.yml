@@ -46,12 +46,12 @@ jobs:
             echo 'export SSH_USER="rootuser"' >> $BASH_ENV
             echo 'export SSH_HOST="40.121.12.189"' >> $BASH_ENV
           #  ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
-      # - run:
-      #     name: "SSH_USER content"
-      #     command: echo ${SSH_USER}
-      # - run:
-      #     name: "SSH_HOST content"
-      #     command: echo ${SSH_HOST}
+      - run:
+          name: "SSH_USER content"
+          command: echo ${SSH_USER}
+      - run:
+          name: "SSH_HOST content"
+          command: echo ${SSH_HOST}
           
 workflows:
   version: 2
