@@ -28,24 +28,24 @@ jobs:
       - run:
           name: Setup Environment Variables
           command: |
-            echo 'export "rootuser"' >> $SSH_USER
-            echo 'export "40.121.12.189"' >> $SSH_HOST
+            echo 'export SSH_USER="rootuser"' >> $BASH_ENV
+            echo 'export SSH_HOST"40.121.12.189"' >> $BASH_ENV
       - run:
           name: "SSH_USER content"
           command: echo ${SSH_USER}
       - run:
           name: "SSH_HOST content"
           command: echo ${SSH_HOST}
-  deploy:
-    machine:
-      enabled: true
-    steps:
-      - run:
-          environment: 
-            SSH_USER: "rootuser"
-            SSH_HOST: "40.121.12.189"
-          name: Deploy Over SSH
-          command: |
-            echo $SSH_USER
-            echo $SSH_HOST
-          #  ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
+  # deploy:
+  #   machine:
+  #     enabled: true
+  #   steps:
+  #     - run:
+  #         environment: 
+  #           SSH_USER: "rootuser"
+  #           SSH_HOST: "40.121.12.189"
+  #         name: Deploy Over SSH
+  #         command: |
+  #           echo $SSH_USER
+  #           echo $SSH_HOST
+  #         #  ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
