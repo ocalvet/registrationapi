@@ -25,27 +25,33 @@ jobs:
       - run: go get 
       #-v -t -d ./...
       #- run: go test -v ./...
+      # - run:
+      #     name: Setup Environment Variables
+      #     command: |
+      #       echo 'export SSH_USER="rootuser"' >> $BASH_ENV
+      #       echo 'export SSH_HOST="40.121.12.189"' >> $BASH_ENV
+      # - run:
+      #     name: "SSH_USER content"
+      #     command: echo ${SSH_USER}
+      # - run:
+      #     name: "SSH_HOST content"
+      #     command: echo ${SSH_HOST}
+  deploy:
+    machine:
+      enabled: true
+    steps:
       - run:
-          name: Setup Environment Variables
+          name: Setup Environment Variables for deploy
           command: |
             echo 'export SSH_USER="rootuser"' >> $BASH_ENV
             echo 'export SSH_HOST="40.121.12.189"' >> $BASH_ENV
+          #  ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
       - run:
           name: "SSH_USER content"
           command: echo ${SSH_USER}
       - run:
           name: "SSH_HOST content"
           command: echo ${SSH_HOST}
-  deploy:
-    machine:
-      enabled: true
-    steps:
-      - run:
-          name: Deploy Over SSH
-          command: |
-            echo ${SSH_USER}
-            echo ${SSH_HOST}
-          #  ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
           
 workflows:
   version: 2
