@@ -25,3 +25,16 @@ jobs:
       - run: go get 
       #-v -t -d ./...
       #- run: go test -v ./...
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - run:
+          environment: 
+            SSH_USER: "rootuser",
+            SSH_HOST: "40.121.12.189"
+          name: Deploy Over SSH
+          command: |
+            echo $SSH_USER
+            echo $SSH_HOST
+          #  ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
