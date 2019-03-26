@@ -24,6 +24,7 @@ func NewRegistrationController(db database.Storage) RegistrationController {
 // HandleGetAll handles getting all registrations request
 func (controller RegistrationController) HandleGetAll(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	log.Println("Handling getting all registrations")
+	enableCors(&w)
 	registrations := controller.db.GetRegistrations()
 	encodedRegistrations, err := json.Marshal(registrations)
 	if err != nil {
@@ -32,11 +33,13 @@ func (controller RegistrationController) HandleGetAll(w http.ResponseWriter, r *
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Write(encodedRegistrations)
+
 }
 
 // HandleGetOne handles getting all registrations request
 func (controller RegistrationController) HandleGetOne(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	id := p.ByName("id")
+	enableCors(&w)
 	log.Printf("handling getting registration with %s", id)
 	if len(id) > 0 {
 		i := controller.db.GetRegistration(id)
@@ -57,6 +60,7 @@ func (controller RegistrationController) HandleGetOne(w http.ResponseWriter, r *
 // HandleDeleteRegistration handles deleting a registrations request
 func (controller RegistrationController) HandleDeleteRegistration(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	id := p.ByName("id")
+	enableCors(&w)
 	log.Printf("handling deleting registration with id %s", id)
 	if len(id) > 0 {
 		controller.db.DeleteRegistration(id)
@@ -68,6 +72,7 @@ func (controller RegistrationController) HandleDeleteRegistration(w http.Respons
 
 // HandleNewRegistration handles adding a registration request
 func (controller RegistrationController) HandleNewRegistration(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	enableCors(&w)
 	log.Println("handling creation of a registration")
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -89,4 +94,13 @@ func (controller RegistrationController) HandleNewRegistration(w http.ResponseWr
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Write(encodedRegistration)
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "*")
+	// (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS")
+	// (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type")
+	// (*w).Header().Set("Content-Type", "application/json; text/plain")
+	// (*w).Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
 }
