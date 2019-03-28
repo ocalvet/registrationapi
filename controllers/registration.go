@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/ocalvet/registrationapi/database"
-	"github.com/ocalvet/registrationapi/models"
+	//"github.com/ocalvet/registrationapi/database"
+	//"github.com/ocalvet/registrationapi/models"
 )
 
 // RegistrationController handles request for registration
