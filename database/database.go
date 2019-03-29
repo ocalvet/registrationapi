@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"registrationapi/models"
+
 	scribble "github.com/nanobox-io/golang-scribble"
 	uuid "github.com/nu7hatch/gouuid"
-	"github.com/ocalvet/registrationapi/models"
 )
 
 // Storage reads data from a store

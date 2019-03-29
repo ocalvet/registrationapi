@@ -1,18 +1,19 @@
-GET http://localhost:8080/api/registrations
+GET http://172.31.2.55/api/registrations
 
 ###
-GET http://localhost:8080/api/registrations/1
+GET http://172.31.2.55/api/registrations/a14424c7-b763-4dd8-743e-d87d4107bc79
 
 ###
-POST http://localhost:8080/api/registrations
+POST http://172.31.2.55/api/registrations
 Content-Type: application/json
 
 {
 	"user": {
-		"firstName": "Ismail",
-		"lastName": "Fletcher",
-		"email": "ifletcher@example.com",
-		"skills": ["c#", "go", "NodeJS"]
+		"firstName": "Volt4",
+		"lastName": "Troll4",
+		"email": "ramp@example.com",
+		"skills": ["c#", "go", "NodeJS"],
+        "equipment": "ncci"
 	},
 	"team": {
 		"name": "Horizon",
@@ -26,4 +27,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/api/registrations/48e24ddb-8dfa-4b03-7bb1-a7dd10d75ec2
+DELETE http://172.31.2.55/api/registrations/1fb658a4-d319-4b23-6f4b-08b02bd7ffc4

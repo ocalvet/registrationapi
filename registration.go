@@ -2,11 +2,14 @@ package main
 
 import (
 	"log"
+	"net"
 	"net/http"
 
+	"registrationapi/controllers"
+	"registrationapi/database"
+
 	"github.com/julienschmidt/httprouter"
-	"github.com/ocalvet/registrationapi/controllers"
-	"github.com/ocalvet/registrationapi/database"
+	"github.com/rs/cors"
 )
 
 // RouterDef interface to define a router
@@ -16,18 +19,24 @@ type RouterDef interface {
 	DELETE(string, httprouter.Handle)
 }
 
-func generateIdeaHandler(router RouterDef, db database.DB) {
+func main() {
+	db := database.New()
+	router := httprouter.New()
 	controller := controllers.NewRegistrationController(db)
 	router.GET("/api/registrations", controller.HandleGetAll)
 	router.GET("/api/registrations/:id", controller.HandleGetOne)
 	router.POST("/api/registrations", controller.HandleNewRegistration)
 	router.DELETE("/api/registrations/:id", controller.HandleDeleteRegistration)
-}
-
-func main() {
-	db := database.New()
-	router := httprouter.New()
-	generateIdeaHandler(router, db)
 	log.Println("Listening :8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	c := cors.AllowAll()
+
+	server := &http.Server{Handler: c.Handler(router)}
+	l, err := net.Listen("tcp4", ":8080")
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = server.Serve(l)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

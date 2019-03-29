@@ -6,9 +6,12 @@ import (
 	"log"
 	"net/http"
 
+	"registrationapi/database"
+	"registrationapi/models"
+
 	"github.com/julienschmidt/httprouter"
-	"github.com/ocalvet/registrationapi/database"
-	"github.com/ocalvet/registrationapi/models"
+	// "github.com/ocalvet/registrationapi/database"
+	// "github.com/ocalvet/registrationapi/models"
 )
 
 // RegistrationController handles request for registration
@@ -33,6 +36,7 @@ func (controller RegistrationController) HandleGetAll(w http.ResponseWriter, r *
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Write(encodedRegistrations)
+
 }
 
 // HandleGetOne handles getting all registrations request
